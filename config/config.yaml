@@ -1,0 +1,60 @@
+# Cultura Growth Intelligence Configuration
+
+# Analysis Settings
+analysis:
+  default_lookback_days: 30
+  min_cohort_size: 10  # Minimum users for reliable analysis
+  confidence_thresholds:
+    high_days: 30
+    high_conversions: 30
+    medium_days: 14
+    medium_conversions: 10
+
+# Campaign Matching
+matching:
+  # Campaign name normalization rules
+  normalize:
+    - replace: ["_", "-"]
+    - lowercase: true
+    - trim_whitespace: true
+
+  # UTM parameter priority for matching
+  utm_priority:
+    - utm_campaign
+    - utm_source
+    - utm_medium
+
+# LTV Prediction Model
+ltv:
+  # Months to use for LTV calculation
+  prediction_horizon_months: 12
+
+  # Churn prediction weights
+  retention_weights:
+    day_7: 0.3
+    day_14: 0.3
+    day_30: 0.4
+
+  # Conservative vs optimistic prediction
+  prediction_mode: "conservative"  # Options: conservative, moderate, optimistic
+
+# Scaling Recommendations
+scaling:
+  # When to recommend scaling
+  scale_criteria:
+    min_ltv_cac_ratio: 4.0
+    min_data_days: 14
+    min_paid_users: 5
+    max_cac_threshold: 500
+
+  # Scaling increment suggestions
+  budget_increments:
+    low_confidence: 1.5   # 50% increase
+    medium_confidence: 2.0  # 100% increase
+    high_confidence: 3.0   # 200% increase
+
+# Reporting
+reports:
+  output_format: "markdown"  # Options: markdown, json, html
+  include_charts: true
+  save_history: true
